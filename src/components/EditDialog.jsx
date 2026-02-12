@@ -31,7 +31,6 @@ function Dialog({ isOpen, setOpen, data, setData, noteData, setNoteData }) {
 							className="btn discard-btn"
 							onClick={() => {
 								setOpen(false);
-								setData({ title: "", body: "", id: "" });
 							}}
 						>
 							Discard
@@ -50,7 +49,7 @@ function Dialog({ isOpen, setOpen, data, setData, noteData, setNoteData }) {
 									}
 								]);
 								setOpen(false);
-								setData({ title: "", body: "", id: "" });
+								localStorage.setItem("noteData", JSON.stringify(noteData));
 								
 							}}
 						>

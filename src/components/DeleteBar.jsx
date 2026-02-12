@@ -2,6 +2,7 @@ function DeleteBar({ display, setDisplay, deleteCheckedNotes, setNoteData }) {
 	function cancelDelete() {
 		setDisplay("none")
 		setNoteData(prev => prev.map(note => ({ ...note, checked: false })));
+		localStorage.setItem("noteData", JSON.stringify(noteData));
 	}
 
 	return (

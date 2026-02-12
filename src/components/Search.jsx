@@ -1,4 +1,19 @@
-function Search({ setOpen }) {
+import NotesContainer from "./NotesContainer.jsx";
+
+function Search({ setOpen, search, setSearch,noteData, setNoteData, setFilteredNotes  }) {
+	function filterNotes(e) {
+		setSearch(e.target.value);
+		setFilteredNotes(
+			noteData.filter(note => {
+				const query = e.target.value.toLowerCase();
+				return (
+					note.title.toLowerCase().includes(query) ||
+					note.body.toLowerCase().includes(query)
+				);
+			})
+		);
+	}
+
 	return (
 		<>
 			<main className="main">
@@ -8,6 +23,8 @@ function Search({ setOpen }) {
 						type="search"
 						placeholder="Search Your Note..."
 						className="search-bar"
+						value={search}
+						onChange={e => filterNotes(e)}
 					/>
 				</div>
 				<div className="add-div btn" onClick={() => setOpen(true)}>

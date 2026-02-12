@@ -11,16 +11,18 @@ function App() {
 		JSON.parse(localStorage.getItem("noteData")) || []
 	);
 	const [display, setDisplay] = useState("none");
-	const [box, setBox] = useState(false);
-
-	useEffect(() => {
-		localStorage.setItem("noteData", JSON.stringify(noteData));
-	}, [noteData]);
+	const [search, setSearch] = useState("");
+	const [filteredNotes, setFilteredNotes] = useState([]);
 
 	useEffect(() => {
 		let res = JSON.parse(localStorage.getItem("noteData")) || [];
 		setNoteData(res);
 	}, []);
+
+	useEffect(
+		() => {localStorage.setItem("noteData", JSON.stringify(noteData))},
+		[noteData]
+	);
 
 	function toggleCheck(id) {
 		setNoteData(prev =>
@@ -33,7 +35,7 @@ function App() {
 	function deleteCheckedNotes() {
 		setNoteData(prev => {
 			const updated = prev.filter(note => !note.checked);
-      setDisplay("none")
+			setDisplay("none");
 			return updated;
 		});
 	}
@@ -44,13 +46,20 @@ function App() {
 				<header>
 					<h1 className="main-heading">Notes App</h1>
 				</header>
-				<Search setOpen={setOpen} />
+				<Search
+					setOpen={setOpen}
+					search={search}
+					setSearch={setSearch}
+					setNoteData={setNoteData}
+					noteData={noteData}
+					setFilteredNotes={setFilteredNotes}
+				/>
 				<div className="your-notes-head">
 					<h2 className="head-title">Your Notes</h2>
 				</div>
 				<div className="your-notes-cont">
 					<NotesContainer
-						noteData={noteData}
+						noteData={search ? filteredNotes : noteData}
 						setNoteData={setNoteData}
 						display={display}
 						setDisplay={setDisplay}
@@ -66,7 +75,12 @@ function App() {
 				noteData={noteData}
 				setNoteData={setNoteData}
 			/>
-			<DeleteBar display={display} setDisplay={setDisplay} deleteCheckedNotes={deleteCheckedNotes} setNoteData={setNoteData} />
+			<DeleteBar
+				display={display}
+				setDisplay={setDisplay}
+				deleteCheckedNotes={deleteCheckedNotes}
+				setNoteData={setNoteData}
+			/>
 		</>
 	);
 }

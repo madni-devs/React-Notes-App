@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Dialog from "./Dialog.jsx";
+import Dialog from "./EditDialog.jsx";
 
 function Note({ note, noteData, setNoteData, display, checked, toggleCheck }) {
 	const [open, setOpen] = useState(false);
